@@ -11,6 +11,4 @@ git clone -o source git@github.com:mgcrea/create-typescript-lib.git my-new-libra
 rm -rf .git; git init
 # Create first commit
 git add --all .; git ci -am "feat(git): bootstrap from github:mgcrea/create-typescript-lib"
-# Reset git history
-rm -rf .git; git init
 ```
