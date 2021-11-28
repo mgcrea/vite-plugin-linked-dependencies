@@ -20,8 +20,7 @@
 
 ## Features
 
-- Automatically hoist your linked dependencies' peer dependencies as local aliases inside your local `node_modules`
-  folder.
+- Automatically hoist your linked packages peer dependencies as local aliases inside your local `node_modules` folder.
 
 ## Install
 
@@ -33,9 +32,9 @@ npm install --save-dev @mgcrea/vite-plugin-linked-packages
 
 ```tsx
 // vite.config.ts
-import linkedDependenciesPlugin from '@mgcrea/vite-plugin-linked-packages';
+import linkedPackagesPlugin from '@mgcrea/vite-plugin-linked-packages';
 
 export default defineConfig({
-  plugins: [linkedDependenciesPlugin()],
+  plugins: [linkedPackagesPlugin()],
 });
 ```
