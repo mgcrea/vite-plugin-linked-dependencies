@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-linked-packages",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Automatically alias linked packages peer dependencies",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
