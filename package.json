@@ -1,21 +1,24 @@
 {
-  "name": "create-typescript-lib",
+  "name": "vite-plugin-linked-packages",
   "version": "1.0.0",
-  "description": "Typescript library quickstart project",
+  "description": "Automatically alias linked packages peer dependencies",
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "start": "NODE_PATH=. ts-node-dev --require dotenv/config --respawn --transpile-only src/index",
     "inspect": "NODE_PATH=. node --require dotenv/config --require ts-node/register/transpile-only --inspect src/index",
-    "build": "rm -rf build/*; tsc --build",
-    "test": "jest",
-    "typecheck": "tsc --noEmit",
+    "build": "rimraf lib/*; tsc --build",
+    "test": "npm run lint && npm run prettycheck && npm run typecheck && npm run spec",
+    "lint": "eslint src/",
     "prettycheck": "prettier --check 'src/'",
-    "lint": "eslint src/"
+    "typecheck": "tsc --noEmit",
+    "spec": "jest --runInBand"
   },
   "author": "Olivier Louvignes <olivier@mgcrea.io>",
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^27.0.3",
+    "@types/node": "^16.11.10",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
     "dotenv": "^10.0.0",
@@ -24,6 +27,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "^27.3.1",
     "prettier": "^2.5.0",
+    "rimraf": "^3.0.2",
     "ts-jest": "^27.0.7",
     "ts-node": "^10.4.0",
     "ts-node-dev": "^1.1.8",
