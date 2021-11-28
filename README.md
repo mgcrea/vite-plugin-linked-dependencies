@@ -1,4 +1,4 @@
-# vite-plugin-linked-dependencies
+# vite-plugin-linked-packages
 
 <p align="center">
   <a href="https://www.npmjs.com/package/@mgcrea/vite-plugin-linked-packages">
