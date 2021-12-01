@@ -21,27 +21,28 @@ const listSymlinks = async (directory: PathLike, { depth = 0, filter }: ListSyml
   return symlinks;
 };
 
-export default async function linkedPackagesPlugin(root = process.cwd()) {
+export default function linkedPackagesPlugin(root = process.cwd()) {
   const modulesDirectory = resolve(root, 'node_modules');
-  const linkedDependencies = await listSymlinks(modulesDirectory, {
-    depth: 1,
-    filter: (item) => item.name.startsWith('@'),
-  });
-  const linkedPeerDependencies: string[] = [];
-  for (const linkedDependency of linkedDependencies) {
-    const packageContents = await readFile(resolve(modulesDirectory, linkedDependency, 'package.json'), 'utf-8');
-    const packageJson = JSON.parse(packageContents);
-    if (packageJson.peerDependencies) {
-      Object.keys(packageJson.peerDependencies).forEach((name) => {
-        if (!linkedPeerDependencies.includes(name)) {
-          linkedPeerDependencies.push(name);
-        }
-      });
-    }
-  }
+
   return {
     name: 'linked-packages',
-    config(config: PartialViteConfig) {
+    async config(config: PartialViteConfig) {
+      const linkedDependencies = await listSymlinks(modulesDirectory, {
+        depth: 1,
+        filter: (item) => item.name.startsWith('@'),
+      });
+      const linkedPeerDependencies: string[] = [];
+      for (const linkedDependency of linkedDependencies) {
+        const packageContents = await readFile(resolve(modulesDirectory, linkedDependency, 'package.json'), 'utf-8');
+        const packageJson = JSON.parse(packageContents);
+        if (packageJson.peerDependencies) {
+          Object.keys(packageJson.peerDependencies).forEach((name) => {
+            if (!linkedPeerDependencies.includes(name)) {
+              linkedPeerDependencies.push(name);
+            }
+          });
+        }
+      }
       config.resolve.alias.push(
         ...linkedPeerDependencies.map((pkgName) => ({
           find: pkgName,
