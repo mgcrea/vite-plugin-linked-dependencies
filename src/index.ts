@@ -27,7 +27,7 @@ export default function viteLinkedPackages(root = process.cwd()): PluginOption {
 
   const plugin: Plugin = {
     name: 'linked-packages',
-    async config(config) {
+    async config() {
       const linkedDependencies = await listSymlinks(modulesDirectory, {
         depth: 1,
         filter: (item) => item.name.startsWith('@'),
@@ -44,11 +44,13 @@ export default function viteLinkedPackages(root = process.cwd()): PluginOption {
           });
         }
       }
-      config.resolve = {
-        alias: linkedPeerDependencies.map((pkgName) => ({
-          find: pkgName,
-          replacement: resolve(modulesDirectory, pkgName),
-        })),
+      return {
+        resolve: {
+          alias: linkedPeerDependencies.map((pkgName) => ({
+            find: pkgName,
+            replacement: resolve(modulesDirectory, pkgName),
+          })),
+        },
       };
     },
   };
