@@ -1,3 +1,4 @@
+import type { Plugin, PluginOption } from 'vite';
 import { Dirent, PathLike } from 'fs';
 import { readdir, readFile } from 'fs/promises';
 import { resolve } from 'path';
@@ -21,12 +22,12 @@ const listSymlinks = async (directory: PathLike, { depth = 0, filter }: ListSyml
   return symlinks;
 };
 
-export default function linkedPackagesPlugin(root = process.cwd()) {
+export default function viteLinkedPackages(root = process.cwd()): PluginOption {
   const modulesDirectory = resolve(root, 'node_modules');
 
-  return {
+  const plugin: Plugin = {
     name: 'linked-packages',
-    async config(config: PartialViteConfig) {
+    async config(config) {
       const linkedDependencies = await listSymlinks(modulesDirectory, {
         depth: 1,
         filter: (item) => item.name.startsWith('@'),
@@ -43,18 +44,14 @@ export default function linkedPackagesPlugin(root = process.cwd()) {
           });
         }
       }
-      config.resolve.alias.push(
-        ...linkedPeerDependencies.map((pkgName) => ({
+      config.resolve = {
+        alias: linkedPeerDependencies.map((pkgName) => ({
           find: pkgName,
           replacement: resolve(modulesDirectory, pkgName),
-        }))
-      );
+        })),
+      };
     },
   };
-}
 
-type PartialViteConfig = {
-  resolve: {
-    alias: { find: string; replacement: string }[];
-  };
-};
+  return plugin;
+}

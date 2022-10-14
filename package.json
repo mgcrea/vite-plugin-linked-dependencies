@@ -2,12 +2,20 @@
   "name": "@mgcrea/vite-plugin-linked-packages",
   "version": "1.1.0",
   "description": "Automatically alias linked packages peer dependencies",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "repository": "github:mgcrea/vite-plugin-linked-packages",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
   "scripts": {
-    "start": "NODE_PATH=. ts-node-dev --require dotenv/config --respawn --transpile-only src/index",
-    "inspect": "NODE_PATH=. node --require dotenv/config --require ts-node/register/transpile-only --inspect src/index",
-    "build": "rimraf lib/*; tsc --build",
+    "dev": "unbuild --stub",
+    "build": "unbuild",
     "test": "npm run lint && npm run prettycheck && npm run typecheck && npm run spec",
     "lint": "eslint src/",
     "prettycheck": "prettier --check 'src/'",
@@ -17,21 +25,22 @@
   "author": "Olivier Louvignes <olivier@mgcrea.io>",
   "license": "MIT",
   "devDependencies": {
-    "@types/jest": "^29.1.1",
-    "@types/node": "^18.7.23",
-    "@typescript-eslint/eslint-plugin": "^5.38.1",
-    "@typescript-eslint/parser": "^5.38.1",
+    "@types/jest": "^29.1.2",
+    "@types/node": "^18.8.5",
+    "@typescript-eslint/eslint-plugin": "^5.40.0",
+    "@typescript-eslint/parser": "^5.40.0",
     "dotenv": "^16.0.3",
-    "eslint": "^8.24.0",
+    "eslint": "^8.25.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "jest": "^29.1.1",
+    "jest": "^29.2.0",
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
     "ts-jest": "^29.0.3",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^4.8.4",
-    "vite": "^3.1.4"
+    "unbuild": "^0.9.1",
+    "vite": "^3.1.8"
   }
 }
