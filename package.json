@@ -20,7 +20,8 @@
     "lint": "eslint src/",
     "prettycheck": "prettier --check 'src/'",
     "typecheck": "tsc --noEmit",
-    "spec": "jest --runInBand"
+    "spec": "jest --runInBand",
+    "prepublishOnly": "npm run build"
   },
   "author": "Olivier Louvignes <olivier@mgcrea.io>",
   "license": "MIT",
