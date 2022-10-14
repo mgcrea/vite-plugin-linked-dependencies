@@ -1,6 +1,6 @@
 {
   "name": "@mgcrea/vite-plugin-linked-packages",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Automatically alias linked packages peer dependencies",
   "repository": "github:mgcrea/vite-plugin-linked-packages",
   "main": "./dist/index.cjs",
